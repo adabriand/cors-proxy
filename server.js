@@ -31,7 +31,7 @@ app.all('*', function (req, res, next) {
         if(req.header('X-VOUD-CHANNEL')) headers['X-VOUD-CHANNEL'] = req.header('X-VOUD-CHANNEL');
         if(req.header('X-VOUD-BUILD-NUMBER')) headers['X-VOUD-BUILD-NUMBER'] = req.header('X-VOUD-BUILD-NUMBER'); 
         
-        request({ url: targetURL + req.url, method: req.method, json: req.body, headers: {} },
+        request({ url: targetURL + req.url, method: req.method, json: req.body, headers: headers },
             function (error, response, body) {
                 if (error) {
                     console.error('error: ' + response.statusCode)
