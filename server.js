@@ -24,8 +24,12 @@ app.all('*', function (req, res, next) {
             res.send(500, { error: 'There is no Target-Endpoint header in the request' });
             return;
         }
-        console.log(JSON.stringify(req.headers));
-        console.log(JSON.parse(JSON.stringify(req.headers)));
+
+        var headers = {}
+        if(req.header('X-VOUD-USER-TOKEN')) headers['X-VOUD-USER-TOKEN'] = req.header('X-VOUD-USER-TOKEN');
+        if(req.header('Content-Type')) headers['Content-Type'] = req.header('Content-Type');
+        if(req.header('X-VOUD-CHANNEL')) headers['X-VOUD-CHANNEL'] = req.header('X-VOUD-CHANNEL');
+        if(req.header('X-VOUD-BUILD-NUMBER')) headers['X-VOUD-BUILD-NUMBER'] = req.header('X-VOUD-BUILD-NUMBER'); 
         
         request({ url: targetURL + req.url, method: req.method, json: req.body, headers: {} },
             function (error, response, body) {
