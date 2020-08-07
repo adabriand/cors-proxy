@@ -56,7 +56,7 @@ app.all('*', function (req, res, next) {
             headers: headers,
         };
         
-//         if (targetProxyHost) options['host'] = targetProxyHost;
+        if (targetProxyHost) options['host'] = targetProxyHost;
         if (targetProxyPort) options['proxy'] = 'https://' + targetProxyUsername + ':' + targetProxyPassword + '@' + targetProxyHost + ':' + targetProxyPort;
         
         console.log(options);
