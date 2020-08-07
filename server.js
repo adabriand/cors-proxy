@@ -32,10 +32,6 @@ app.all('*', function (req, res, next) {
         res.send();
     } else {
         var targetURL = req.header('Target-URL');
-        var targetProxyHost = req.header('Target-Proxy-Host');
-        var targetProxyPort = req.header('Target-Proxy-Port');
-        var targetProxyUsername = req.header('Target-Proxy-Username');
-        var targetProxyPassword = req.header('Target-Proxy-Password');
         
         if (!targetURL) {
             res.send(500, { error: 'There is no Target-Endpoint header in the request' });
@@ -47,20 +43,16 @@ app.all('*', function (req, res, next) {
         if (req.header('X-VOUD-USER-TOKEN')) headers['X-VOUD-USER-TOKEN'] = req.header('X-VOUD-USER-TOKEN');
         if (req.header('X-VOUD-CHANNEL')) headers['X-VOUD-CHANNEL'] = req.header('X-VOUD-CHANNEL');
         if (req.header('X-VOUD-BUILD-NUMBER')) headers['X-VOUD-BUILD-NUMBER'] = req.header('X-VOUD-BUILD-NUMBER');
-//         if (targetProxyUsername && targetProxyPassword) headers['Proxy-Authorization'] = buildAuthHeader(targetProxyUsername, targetProxyPassword);
         
         var options = { 
             url: targetURL + req.url, 
             method: req.method, 
-            body: Buffer.from(req.body.toString('binary'), 'base64'),
+            body: req.body,
+//             body: Buffer.from(req.body.toString('binary'), 'base64'),
             headers: headers,
             json: false
         };
-        
-            
-//         options['proxy'] = 'https://' + targetProxyUsername + ':' + targetProxyPassword + '@' + targetProxyHost + ':' + targetProxyPort;
-        console.log(req.body.toString('binary'));
-        console.log(Buffer.from(req.body.toString('binary'), 'base64').toString('binary'));
+       
         console.log(options);
         console.log(headers);
         
