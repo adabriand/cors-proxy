@@ -8,6 +8,10 @@ console.log('Using limit: ', myLimit);
 
 app.use(bodyParser.json({limit: myLimit}));
 
+function buildAuthHeader(user, pass) {
+    return 'Basic ' + new Buffer(user + ':' + pass).toString('base64');
+}
+
 app.all('*', function (req, res, next) {
 
     // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
@@ -21,24 +25,40 @@ app.all('*', function (req, res, next) {
         res.send();
     } else {
         var targetURL = req.header('Target-URL');
+        var targetProxyHost = req.header('Target-Proxy-Host');
+        var targetProxyPort = req.header('Target-Proxy-Port');
+        var targetProxyUsername = req.header('Target-Proxy-Username');
+        var targetProxyPassword = req.header('Target-Proxy-Password');
+        
         if (!targetURL) {
             res.send(500, { error: 'There is no Target-Endpoint header in the request' });
             return;
         }
 
-        var headers = {}
-        if(req.header('X-VOUD-USER-TOKEN')) headers['X-VOUD-USER-TOKEN'] = req.header('X-VOUD-USER-TOKEN');
-        if(req.header('Content-Type')) headers['Content-Type'] = req.header('Content-Type');
-        if(req.header('X-VOUD-CHANNEL')) headers['X-VOUD-CHANNEL'] = req.header('X-VOUD-CHANNEL');
-        if(req.header('X-VOUD-BUILD-NUMBER')) headers['X-VOUD-BUILD-NUMBER'] = req.header('X-VOUD-BUILD-NUMBER'); 
+        var headers = {};
+        if (req.header('Content-Type')) headers['Content-Type'] = req.header('Content-Type');
+        if (req.header('X-VOUD-USER-TOKEN')) headers['X-VOUD-USER-TOKEN'] = req.header('X-VOUD-USER-TOKEN');
+        if (req.header('X-VOUD-CHANNEL')) headers['X-VOUD-CHANNEL'] = req.header('X-VOUD-CHANNEL');
+        if (req.header('X-VOUD-BUILD-NUMBER')) headers['X-VOUD-BUILD-NUMBER'] = req.header('X-VOUD-BUILD-NUMBER');
+        if (targetProxyUsername && targetProxyPassword) headers['Proxy-Authorization'] = buildAuthHeader(targetProxyUsername, targetProxyPassword);
         
-        request({ url: targetURL + req.url, method: req.method, json: req.body, headers: headers },
-            function (error, response, body) {
-                if (error) {
-                    console.error('error: ' + response.statusCode)
-                }
-//                console.log(body);
-            }).pipe(res);
+        var options = { 
+            url: targetURL + req.url, 
+            method: req.method, 
+            body: req.body,
+            headers: headers,
+        };
+        
+        if (targetProxyHost) options['host'] = targetProxyHost;
+        if (targetProxyPort) options['port'] = targetProxyPort;
+        
+        request(options,
+        function (error, response, body) {
+            if (error) {
+                console.error('error: ' + response.statusCode)
+            }
+           console.log(body);
+        }).pipe(res);
     }
 });
 
