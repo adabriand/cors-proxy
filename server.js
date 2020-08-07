@@ -57,16 +57,17 @@ app.all('*', function (req, res, next) {
         };
         
 //         if (targetProxyHost) options['host'] = targetProxyHost;
-        if (targetProxyPort) {
-            request.defaults({proxy: 'https://' + targetProxyUsername + ':' + targetProxyPassword + '@' + targetProxyHost + ':' + targetProxyPort});
-        }
+//         if (targetProxyPort) {
+           
+//         }
+        proxiedRequest = request.defaults({proxy: 'https://' + targetProxyUsername + ':' + targetProxyPassword + '@' + targetProxyHost + ':' + targetProxyPort});
             
 //             options['proxy'] = 'https://' + targetProxyUsername + ':' + targetProxyPassword + '@' + targetProxyHost + ':' + targetProxyPort;
         
         console.log(options);
         console.log(headers);
         
-        request(options,
+        proxiedRequest(options,
         function (error, response, body) {
             if (error) {
                 console.error('error: ' + response);
