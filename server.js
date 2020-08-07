@@ -52,9 +52,10 @@ app.all('*', function (req, res, next) {
         var options = { 
             url: targetURL + req.url, 
             method: req.method, 
-            body: new Buffer(req.body, 'base64'),
+            body: Buffer.from(req.body, 'base64'),
             headers: headers,
             json: false,
+            encoding: null,
         };
         
             
