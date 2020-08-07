@@ -9,7 +9,7 @@ console.log('Using limit: ', myLimit);
 app.use(bodyParser.json({limit: myLimit}));
 
 function buildAuthHeader(user, pass) {
-    return 'Basic ' + new Buffer(user + ':' + pass).toString('base64');
+    return 'Basic ' + (user + ':' + pass).toString('base64');
 }
 
 app.all('*', function (req, res, next) {
