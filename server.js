@@ -47,7 +47,7 @@ app.all('*', function (req, res, next) {
         if (req.header('X-VOUD-USER-TOKEN')) headers['X-VOUD-USER-TOKEN'] = req.header('X-VOUD-USER-TOKEN');
         if (req.header('X-VOUD-CHANNEL')) headers['X-VOUD-CHANNEL'] = req.header('X-VOUD-CHANNEL');
         if (req.header('X-VOUD-BUILD-NUMBER')) headers['X-VOUD-BUILD-NUMBER'] = req.header('X-VOUD-BUILD-NUMBER');
-        if (targetProxyUsername && targetProxyPassword) headers['Proxy-Authorization'] = buildAuthHeader(targetProxyUsername, targetProxyPassword);
+//         if (targetProxyUsername && targetProxyPassword) headers['Proxy-Authorization'] = buildAuthHeader(targetProxyUsername, targetProxyPassword);
         
         var options = { 
             url: targetURL + req.url, 
