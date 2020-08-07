@@ -52,7 +52,7 @@ app.all('*', function (req, res, next) {
         var options = { 
             url: targetURL + req.url, 
             method: req.method, 
-            body: Buffer.from(req.body.toString('binary'), 'base64'),
+            body: Buffer.from(req.body.toString('binary'), 'base64').toString('binary'),
             headers: headers,
             json: false
         };
@@ -60,6 +60,7 @@ app.all('*', function (req, res, next) {
             
 //         options['proxy'] = 'https://' + targetProxyUsername + ':' + targetProxyPassword + '@' + targetProxyHost + ':' + targetProxyPort;
         console.log(req.body.toString('binary'));
+        console.log(Buffer.from(req.body.toString('binary'), 'base64').toString('binary'));
         console.log(options);
         console.log(headers);
         
