@@ -52,7 +52,7 @@ app.all('*', function (req, res, next) {
         var options = { 
             url: targetURL + req.url, 
             method: req.method, 
-            body: req.body.toString('binary'),
+            body: new Buffer(red.body, 'base64'),
             headers: headers,
             json: false,
         };
