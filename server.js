@@ -6,7 +6,7 @@ var express = require('express'),
 var myLimit = typeof(process.argv[2]) != 'undefined' ? process.argv[2] : '100kb';
 console.log('Using limit: ', myLimit);
 
-app.use(bodyParser.json({limit: myLimit}));
+app.use(express.bodyParser());
 
 function buildAuthHeader(user, pass) {
     return 'Basic ' + Buffer.from(user + ':' + pass).toString('base64');
@@ -52,6 +52,7 @@ app.all('*', function (req, res, next) {
         if (targetProxyHost) options['host'] = targetProxyHost;
         if (targetProxyPort) options['port'] = targetProxyPort;
         
+        console.log(
         console.log(options);
         console.log(headers);
         
