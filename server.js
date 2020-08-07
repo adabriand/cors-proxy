@@ -57,18 +57,13 @@ app.all('*', function (req, res, next) {
             json: false,
         };
         
-//         if (targetProxyHost) options['host'] = targetProxyHost;
-//         if (targetProxyPort) {
-           
-//         }
-        proxiedRequest = request.defaults({proxy: 'https://' + targetProxyUsername + ':' + targetProxyPassword + '@' + targetProxyHost});
             
-//             options['proxy'] = 'https://' + targetProxyUsername + ':' + targetProxyPassword + '@' + targetProxyHost + ':' + targetProxyPort;
+//         options['proxy'] = 'https://' + targetProxyUsername + ':' + targetProxyPassword + '@' + targetProxyHost + ':' + targetProxyPort;
         
         console.log(options);
         console.log(headers);
         
-        proxiedRequest(options,
+        request(options,
         function (error, response, body) {
             if (error) {
                 console.error('error: ' + response);
