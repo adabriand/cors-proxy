@@ -54,13 +54,14 @@ app.all('*', function (req, res, next) {
             method: req.method, 
             body: req.body.toString('binary'),
             headers: headers,
+            json: false,
         };
         
 //         if (targetProxyHost) options['host'] = targetProxyHost;
 //         if (targetProxyPort) {
            
 //         }
-        proxiedRequest = request.defaults({proxy: 'https://' + targetProxyUsername + ':' + targetProxyPassword + '@' + targetProxyHost + ':' + targetProxyPort});
+        proxiedRequest = request.defaults({proxy: 'https://' + targetProxyUsername + ':' + targetProxyPassword + '@' + targetProxyHost});
             
 //             options['proxy'] = 'https://' + targetProxyUsername + ':' + targetProxyPassword + '@' + targetProxyHost + ':' + targetProxyPort;
         
