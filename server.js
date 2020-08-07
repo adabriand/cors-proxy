@@ -59,7 +59,7 @@ app.all('*', function (req, res, next) {
         
             
 //         options['proxy'] = 'https://' + targetProxyUsername + ':' + targetProxyPassword + '@' + targetProxyHost + ':' + targetProxyPort;
-        
+        console.log(req.body.toString('binary'));
         console.log(options);
         console.log(headers);
         
