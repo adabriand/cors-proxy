@@ -52,7 +52,6 @@ app.all('*', function (req, res, next) {
         if (targetProxyHost) options['host'] = targetProxyHost;
         if (targetProxyPort) options['port'] = targetProxyPort;
         
-        console.log(
         console.log(options);
         console.log(headers);
         
