@@ -65,7 +65,7 @@ app.all('*', function (req, res, next) {
         request(options,
         function (error, response, body) {
             if (error) {
-                console.error('error: ' + response.statusCode)
+                console.error('error: ' + response);
             }
            console.log(body);
         }).pipe(res);
