@@ -6,7 +6,7 @@ var express = require('express'),
 var myLimit = typeof(process.argv[2]) != 'undefined' ? process.argv[2] : '100kb';
 console.log('Using limit: ', myLimit);
 
-app.use(express.bodyParser());
+// app.use(express.bodyParser());
 
 function buildAuthHeader(user, pass) {
     return 'Basic ' + Buffer.from(user + ':' + pass).toString('base64');
